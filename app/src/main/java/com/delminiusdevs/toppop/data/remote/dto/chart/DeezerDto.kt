@@ -1,6 +1,6 @@
 package com.delminiusdevs.toppop.data.remote.dto.chart
 
-data class DezzerDto(
+data class DeezerDto(
     val albums: Albums,
     val artists: Artists,
     val playlists: Playlists,

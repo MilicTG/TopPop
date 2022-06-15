@@ -1,5 +1,8 @@
 package com.delminiusdevs.toppop.di
 
+import com.delminiusdevs.toppop.data.remote.TopPopApi
+import com.delminiusdevs.toppop.data.repository.TopPopChartRepositoryImpl
+import com.delminiusdevs.toppop.domain.repository.TopPopChartRepository
 import com.delminiusdevs.toppop.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -33,5 +36,21 @@ object NetworkModule {
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideTopPopApi(retrofit: Retrofit): TopPopApi{
+        return retrofit.create(TopPopApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTopPopChartSource(
+        topPopApi: TopPopApi
+    ) : TopPopChartRepository {
+        return TopPopChartRepositoryImpl(
+            topPopApi = topPopApi
+        )
     }
 }
