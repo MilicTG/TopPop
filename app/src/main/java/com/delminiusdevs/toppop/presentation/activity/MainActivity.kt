@@ -1,7 +1,8 @@
-package com.delminiusdevs.toppop
+package com.delminiusdevs.toppop.presentation.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.delminiusdevs.toppop.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
