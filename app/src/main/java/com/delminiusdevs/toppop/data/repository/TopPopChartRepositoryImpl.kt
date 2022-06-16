@@ -33,7 +33,7 @@ class TopPopChartRepositoryImpl @Inject constructor(
 
     override suspend fun getSongDetail(albumId: Int): Resource<DeezerSongDetail> {
         return try {
-            val response = topPopApi.getAlbumDetails(albumId = albumId.toString())
+            val response = topPopApi.getAlbumDetails(albumId = albumId)
 
             Resource.Success(
                 data = DeezerSongDetailMapper.from(response)

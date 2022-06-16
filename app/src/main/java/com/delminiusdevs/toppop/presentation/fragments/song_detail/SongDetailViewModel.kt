@@ -1,6 +1,5 @@
 package com.delminiusdevs.toppop.presentation.fragments.song_detail
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +8,6 @@ import com.delminiusdevs.toppop.domain.model.detail.DeezerSongDetail
 import com.delminiusdevs.toppop.domain.repository.TopPopChartRepository
 import com.delminiusdevs.toppop.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,13 +18,10 @@ class SongDetailViewModel @Inject constructor(
 
     private val _songDetail = MutableLiveData<Resource<DeezerSongDetail>>()
     val songDetail: LiveData<Resource<DeezerSongDetail>?> = _songDetail
-
-
+    
     fun getSongDetail(albumId: Int) {
         viewModelScope.launch {
             _songDetail.value = topPopChartRepository.getSongDetail(albumId = albumId)
-            delay(3000)
-            Log.d("ovde", songDetail.value?.message.toString())
         }
     }
 }
