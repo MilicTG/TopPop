@@ -20,7 +20,7 @@
             app:argType="integer"
             android:defaultValue="0"/>
         <argument
-            android:name="artistName"
+            android:name="songName"
             app:argType="string"
             android:defaultValue="Mate Mišo Kovač"/>
     </fragment>

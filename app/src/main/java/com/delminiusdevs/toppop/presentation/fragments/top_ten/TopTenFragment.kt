@@ -1,11 +1,9 @@
 package com.delminiusdevs.toppop.presentation.fragments.top_ten
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.delminiusdevs.toppop.R
@@ -62,17 +60,16 @@ class TopTenFragment : Fragment() {
     private fun setupOnSongClickListener(deezerData: DeezerData) {
         val bundle = Bundle().apply {
             putSerializable("albumId", deezerData.albumId)
-            putSerializable("artistName", deezerData.artistName)
+            putSerializable("songName", deezerData.songName)
         }
         findNavController().navigate(
             R.id.action_topTenFragment_to_songDetailFragment,
             bundle
         )
-        Log.d("ovde", deezerData.albumId.toString())
     }
 
     private fun observeData() {
-        topTenViewModel.topTenChartList.observe(viewLifecycleOwner, Observer { response ->
+        topTenViewModel.topTenChartList.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is Resource.Success -> {
                     hideProgressBar()
@@ -92,7 +89,7 @@ class TopTenFragment : Fragment() {
                 }
                 else -> Unit
             }
-        })
+        }
     }
 
     private fun setAppBarOnClickListener() {

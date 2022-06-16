@@ -18,7 +18,7 @@ class SongDetailViewModel @Inject constructor(
 
     private val _songDetail = MutableLiveData<Resource<DeezerSongDetail>>()
     val songDetail: LiveData<Resource<DeezerSongDetail>?> = _songDetail
-    
+
     fun getSongDetail(albumId: Int) {
         viewModelScope.launch {
             _songDetail.value = topPopChartRepository.getSongDetail(albumId = albumId)
