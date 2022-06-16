@@ -1,8 +1,10 @@
 package com.delminiusdevs.toppop.data.repository
 
 import com.delminiusdevs.toppop.data.mapper.DeezerChartMapper
+import com.delminiusdevs.toppop.data.mapper.DeezerSongDetailMapper
 import com.delminiusdevs.toppop.data.remote.TopPopApi
 import com.delminiusdevs.toppop.domain.model.chart.DeezerChart
+import com.delminiusdevs.toppop.domain.model.detail.DeezerSongDetail
 import com.delminiusdevs.toppop.domain.repository.TopPopChartRepository
 import com.delminiusdevs.toppop.util.Resource
 import javax.inject.Inject
@@ -24,6 +26,19 @@ class TopPopChartRepositoryImpl @Inject constructor(
                     data = DeezerChartMapper.from(response)
                 )
             }
+        } catch (e: Exception) {
+            Resource.Error(e.message.toString())
+        }
+    }
+
+    override suspend fun getSongDetail(albumId: Int): Resource<DeezerSongDetail> {
+        return try {
+            val response = topPopApi.getAlbumDetails(albumId = albumId.toString())
+
+            Resource.Success(
+                data = DeezerSongDetailMapper.from(response)
+            )
+
         } catch (e: Exception) {
             Resource.Error(e.message.toString())
         }

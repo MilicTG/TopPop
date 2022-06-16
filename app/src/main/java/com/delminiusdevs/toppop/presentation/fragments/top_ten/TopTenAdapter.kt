@@ -9,7 +9,7 @@ import com.delminiusdevs.toppop.databinding.CardTopTenBinding
 import com.delminiusdevs.toppop.domain.model.chart.DeezerData
 import com.delminiusdevs.toppop.util.secondsFormatter
 
-class TopTenAdapter : RecyclerView.Adapter<TopTenAdapter.ViewHolder>() {
+class TopTenAdapter(private val onClick:(DeezerData) -> Unit) : RecyclerView.Adapter<TopTenAdapter.ViewHolder>() {
 
     private val differCallback = object : DiffUtil.ItemCallback<DeezerData>() {
         override fun areItemsTheSame(oldItem: DeezerData, newItem: DeezerData): Boolean {
@@ -23,7 +23,6 @@ class TopTenAdapter : RecyclerView.Adapter<TopTenAdapter.ViewHolder>() {
 
     val differ = AsyncListDiffer(this, differCallback)
 
-    private var onItemClickListener: ((DeezerData) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = CardTopTenBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -32,11 +31,7 @@ class TopTenAdapter : RecyclerView.Adapter<TopTenAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val chartItem: DeezerData = differ.currentList[position]
-        holder.bind(chartItem)
-
-        onItemClickListener?.let {
-            it(chartItem)
-        }
+        holder.bind(chartItem, onClick)
     }
 
     override fun getItemCount(): Int = differ.currentList.size
@@ -44,11 +39,14 @@ class TopTenAdapter : RecyclerView.Adapter<TopTenAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: CardTopTenBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(deezerData: DeezerData) {
+        fun bind(deezerData: DeezerData, onClick: (DeezerData) -> Unit) {
             binding.tvChartPosition.text = deezerData.songListNumber.toString()
             binding.tvChartSongName.text = deezerData.songName
             binding.tvChartArtistName.text = deezerData.artistName
             binding.tvChartSongDuration.text = secondsFormatter(deezerData.songDuration)
+            binding.root.setOnClickListener {
+                onClick(deezerData)
+            }
         }
     }
 

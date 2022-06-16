@@ -1,15 +1,16 @@
 package com.delminiusdevs.toppop.presentation.fragments.top_ten
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
-import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.delminiusdevs.toppop.R
 import com.delminiusdevs.toppop.databinding.FragmentTopTenBinding
+import com.delminiusdevs.toppop.domain.model.chart.DeezerData
 import com.delminiusdevs.toppop.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -49,11 +50,25 @@ class TopTenFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        topTenAdapter = TopTenAdapter()
+        topTenAdapter = TopTenAdapter {
+            setupOnSongClickListener(it)
+        }
         binding.rvTopTenChart.apply {
             adapter = topTenAdapter
             layoutManager = LinearLayoutManager(activity)
         }
+    }
+
+    private fun setupOnSongClickListener(deezerData: DeezerData) {
+        val bundle = Bundle().apply {
+            putSerializable("albumId", deezerData.albumId)
+            putSerializable("artistName", deezerData.artistName)
+        }
+        findNavController().navigate(
+            R.id.action_topTenFragment_to_songDetailFragment,
+            bundle
+        )
+        Log.d("ovde", deezerData.albumId.toString())
     }
 
     private fun observeData() {

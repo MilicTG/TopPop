@@ -17,7 +17,7 @@ class TopTenViewModel @Inject constructor(
     private val topPopChartRepository: TopPopChartRepository
 ) : ViewModel() {
 
-    private val _topTenChartList = MutableLiveData<Resource<DeezerChart>?>()
+    private val _topTenChartList = MutableLiveData<Resource<DeezerChart>>()
     val topTenChartList: LiveData<Resource<DeezerChart>?> = _topTenChartList
 
     var sortedChartList: List<DeezerData>? = emptyList()

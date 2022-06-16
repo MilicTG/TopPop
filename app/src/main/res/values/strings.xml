@@ -7,4 +7,8 @@
     <string name="normal">Normal</string>
     <string name="sort_asc">Sort asc</string>
     <string name="sort_desc">Sort desc</string>
+    <string name="song_name">song_name</string>
+    <string name="artist_name">artist_name</string>
+    <string name="album_name">album_name</string>
+    <string name="album_cover">Album Cover</string>
 </resources>
