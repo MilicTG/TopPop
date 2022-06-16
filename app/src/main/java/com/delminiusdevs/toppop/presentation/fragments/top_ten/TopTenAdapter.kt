@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.delminiusdevs.toppop.databinding.CardTopTenBinding
 import com.delminiusdevs.toppop.domain.model.chart.DeezerData
+import com.delminiusdevs.toppop.util.secondsFormatter
 
 class TopTenAdapter : RecyclerView.Adapter<TopTenAdapter.ViewHolder>() {
 
@@ -47,7 +48,7 @@ class TopTenAdapter : RecyclerView.Adapter<TopTenAdapter.ViewHolder>() {
             binding.tvChartPosition.text = deezerData.songListNumber.toString()
             binding.tvChartSongName.text = deezerData.songName
             binding.tvChartArtistName.text = deezerData.artistName
-            binding.tvChartSongDuration.text = deezerData.songDuration.toString()
+            binding.tvChartSongDuration.text = secondsFormatter(deezerData.songDuration)
         }
     }
 

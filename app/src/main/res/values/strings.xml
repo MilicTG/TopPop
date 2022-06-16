@@ -3,4 +3,8 @@
     <string name="place_holder_text">1</string>
     <string name="error_message">Dogodila je se greska</string>
     <string name="loading">Loading...</string>
+    <string name="sort">Sort</string>
+    <string name="normal">Normal</string>
+    <string name="sort_asc">Sort asc</string>
+    <string name="sort_desc">Sort desc</string>
 </resources>

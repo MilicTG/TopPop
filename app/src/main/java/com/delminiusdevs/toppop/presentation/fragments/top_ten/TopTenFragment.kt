@@ -1,14 +1,14 @@
 package com.delminiusdevs.toppop.presentation.fragments.top_ten
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.delminiusdevs.toppop.R
 import com.delminiusdevs.toppop.databinding.FragmentTopTenBinding
 import com.delminiusdevs.toppop.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,6 +21,11 @@ class TopTenFragment : Fragment() {
     lateinit var topTenAdapter: TopTenAdapter
     lateinit var binding: FragmentTopTenBinding
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,11 +37,16 @@ class TopTenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        inflateToolbar()
         setupRecyclerView()
         observeData()
         onRefreshListener()
     }
 
+    private fun inflateToolbar() {
+        binding.topTenToolbar.inflateMenu(R.menu.top_pop_menu)
+        setAppBarOnClickListener()
+    }
 
     private fun setupRecyclerView() {
         topTenAdapter = TopTenAdapter()
@@ -68,6 +78,29 @@ class TopTenFragment : Fragment() {
                 else -> Unit
             }
         })
+    }
+
+    private fun setAppBarOnClickListener() {
+        binding.topTenToolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.chartSortNormal -> {
+                    topTenViewModel.sortDeezerChartNormal()
+                    topTenAdapter.differ.submitList(topTenViewModel.topTenChartList.value?.data?.deezerData)
+                    true
+                }
+                R.id.chartSortAsc -> {
+                    topTenViewModel.sortDeezerChartAsc()
+                    topTenAdapter.differ.submitList(topTenViewModel.sortedChartList?.toList())
+                    true
+                }
+                R.id.chartSortDesc -> {
+                    topTenViewModel.sortDeezerChartDesc()
+                    topTenAdapter.differ.submitList(topTenViewModel.sortedChartList?.toList())
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     private fun onRefreshListener() {

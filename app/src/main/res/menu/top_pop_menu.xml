@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/chartSortNormal"
+        android:title="@string/normal" />
+    <item
+        android:id="@+id/chartSortAsc"
+        android:title="@string/sort_asc" />
+    <item
+        android:id="@+id/chartSortDesc"
+        android:title="@string/sort_desc" />
+</menu>
+
