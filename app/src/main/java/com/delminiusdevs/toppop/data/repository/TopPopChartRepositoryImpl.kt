@@ -1,7 +1,8 @@
 package com.delminiusdevs.toppop.data.repository
 
+import com.delminiusdevs.toppop.data.mapper.DeezerChartMapper
 import com.delminiusdevs.toppop.data.remote.TopPopApi
-import com.delminiusdevs.toppop.domain.model.chart.DeezerData
+import com.delminiusdevs.toppop.domain.model.chart.DeezerChart
 import com.delminiusdevs.toppop.domain.repository.TopPopChartRepository
 import com.delminiusdevs.toppop.util.Resource
 import javax.inject.Inject
@@ -12,10 +13,17 @@ class TopPopChartRepositoryImpl @Inject constructor(
     private val topPopApi: TopPopApi
 ) : TopPopChartRepository {
 
-    override suspend fun getTopTenChart(): Resource<DeezerData> {
+    override suspend fun getTopTenChart(): Resource<DeezerChart> {
         return try {
-            Resource.Loading()
-            
+            val response = topPopApi.getTopTenChart()
+
+            if (response.tracks.data.isEmpty()) {
+                Resource.Loading()
+            } else {
+                Resource.Success(
+                    data = DeezerChartMapper.from(response)
+                )
+            }
         } catch (e: Exception) {
             Resource.Error(e.message.toString())
         }
